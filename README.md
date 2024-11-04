@@ -1,7 +1,15 @@
 ```
 docker compose up -d
+pnpm i
+```
+
+in postgres container
+```
 pg_restore -U postgres -d postgres ./dvdrental
-npm install
+```
+
+```
+pnpm dev
 ```
 
 http://localhost:8419/console
