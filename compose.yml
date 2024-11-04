@@ -20,7 +20,7 @@ services:
       HASURA_GRAPHQL_ENABLE_CONSOLE: true # コンソールを有効にする
       HASURA_GRAPHQL_DEV_MODE: true # 開発モード
     ports:
-      - '8080:8080'
+      - '8419:8080'
 
 volumes:
   postgres_data:

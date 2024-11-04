@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import { AllTypesProps, ReturnTypes, Ops } from './const';
-export const HOST = "http://localhost:8080/v1/graphql"
+export const HOST = "http://localhost:8419/v1/graphql"
 
 
 export const HEADERS = {}
@@ -893,7 +893,63 @@ export type ScalarCoders = {
 type ZEUS_UNIONS = never
 
 export type ValueTypes = {
-    ["_text"]:unknown;
+    /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
+["Boolean_comparison_exp"]: {
+	_eq?: boolean | undefined | null | Variable<any, string>,
+	_gt?: boolean | undefined | null | Variable<any, string>,
+	_gte?: boolean | undefined | null | Variable<any, string>,
+	_in?: Array<boolean> | undefined | null | Variable<any, string>,
+	_is_null?: boolean | undefined | null | Variable<any, string>,
+	_lt?: boolean | undefined | null | Variable<any, string>,
+	_lte?: boolean | undefined | null | Variable<any, string>,
+	_neq?: boolean | undefined | null | Variable<any, string>,
+	_nin?: Array<boolean> | undefined | null | Variable<any, string>
+};
+	/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
+["Int_comparison_exp"]: {
+	_eq?: number | undefined | null | Variable<any, string>,
+	_gt?: number | undefined | null | Variable<any, string>,
+	_gte?: number | undefined | null | Variable<any, string>,
+	_in?: Array<number> | undefined | null | Variable<any, string>,
+	_is_null?: boolean | undefined | null | Variable<any, string>,
+	_lt?: number | undefined | null | Variable<any, string>,
+	_lte?: number | undefined | null | Variable<any, string>,
+	_neq?: number | undefined | null | Variable<any, string>,
+	_nin?: Array<number> | undefined | null | Variable<any, string>
+};
+	/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
+["String_comparison_exp"]: {
+	_eq?: string | undefined | null | Variable<any, string>,
+	_gt?: string | undefined | null | Variable<any, string>,
+	_gte?: string | undefined | null | Variable<any, string>,
+	/** does the column match the given case-insensitive pattern */
+	_ilike?: string | undefined | null | Variable<any, string>,
+	_in?: Array<string> | undefined | null | Variable<any, string>,
+	/** does the column match the given POSIX regular expression, case insensitive */
+	_iregex?: string | undefined | null | Variable<any, string>,
+	_is_null?: boolean | undefined | null | Variable<any, string>,
+	/** does the column match the given pattern */
+	_like?: string | undefined | null | Variable<any, string>,
+	_lt?: string | undefined | null | Variable<any, string>,
+	_lte?: string | undefined | null | Variable<any, string>,
+	_neq?: string | undefined | null | Variable<any, string>,
+	/** does the column NOT match the given case-insensitive pattern */
+	_nilike?: string | undefined | null | Variable<any, string>,
+	_nin?: Array<string> | undefined | null | Variable<any, string>,
+	/** does the column NOT match the given POSIX regular expression, case insensitive */
+	_niregex?: string | undefined | null | Variable<any, string>,
+	/** does the column NOT match the given pattern */
+	_nlike?: string | undefined | null | Variable<any, string>,
+	/** does the column NOT match the given POSIX regular expression, case sensitive */
+	_nregex?: string | undefined | null | Variable<any, string>,
+	/** does the column NOT match the given SQL regular expression */
+	_nsimilar?: string | undefined | null | Variable<any, string>,
+	/** does the column match the given POSIX regular expression, case sensitive */
+	_regex?: string | undefined | null | Variable<any, string>,
+	/** does the column match the given SQL regular expression */
+	_similar?: string | undefined | null | Variable<any, string>
+};
+	["_text"]:unknown;
 	/** Boolean expression to compare columns of type "_text". All fields are combined with logical 'AND'. */
 ["_text_comparison_exp"]: {
 	_eq?: ValueTypes["_text"] | undefined | null | Variable<any, string>,
@@ -1397,18 +1453,6 @@ count?: [{	columns?: Array<ValueTypes["address_select_column"]> | undefined | nu
 	city_id?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
 }>;
-	/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
-["Boolean_comparison_exp"]: {
-	_eq?: boolean | undefined | null | Variable<any, string>,
-	_gt?: boolean | undefined | null | Variable<any, string>,
-	_gte?: boolean | undefined | null | Variable<any, string>,
-	_in?: Array<boolean> | undefined | null | Variable<any, string>,
-	_is_null?: boolean | undefined | null | Variable<any, string>,
-	_lt?: boolean | undefined | null | Variable<any, string>,
-	_lte?: boolean | undefined | null | Variable<any, string>,
-	_neq?: boolean | undefined | null | Variable<any, string>,
-	_nin?: Array<boolean> | undefined | null | Variable<any, string>
-};
 	["bpchar"]:unknown;
 	/** Boolean expression to compare columns of type "bpchar". All fields are combined with logical 'AND'. */
 ["bpchar_comparison_exp"]: {
@@ -3138,18 +3182,6 @@ count?: [{	columns?: Array<ValueTypes["film_list_select_column"]> | undefined | 
 	replacement_cost?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
 }>;
-	/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
-["Int_comparison_exp"]: {
-	_eq?: number | undefined | null | Variable<any, string>,
-	_gt?: number | undefined | null | Variable<any, string>,
-	_gte?: number | undefined | null | Variable<any, string>,
-	_in?: Array<number> | undefined | null | Variable<any, string>,
-	_is_null?: boolean | undefined | null | Variable<any, string>,
-	_lt?: number | undefined | null | Variable<any, string>,
-	_lte?: number | undefined | null | Variable<any, string>,
-	_neq?: number | undefined | null | Variable<any, string>,
-	_nin?: Array<number> | undefined | null | Variable<any, string>
-};
 	/** columns and relationships of "inventory" */
 ["inventory"]: AliasType<{
 	film_id?:boolean | `@${string}`,
@@ -5470,38 +5502,6 @@ count?: [{	columns?: Array<ValueTypes["store_select_column"]> | undefined | null
 	store_id?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
 }>;
-	/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
-["String_comparison_exp"]: {
-	_eq?: string | undefined | null | Variable<any, string>,
-	_gt?: string | undefined | null | Variable<any, string>,
-	_gte?: string | undefined | null | Variable<any, string>,
-	/** does the column match the given case-insensitive pattern */
-	_ilike?: string | undefined | null | Variable<any, string>,
-	_in?: Array<string> | undefined | null | Variable<any, string>,
-	/** does the column match the given POSIX regular expression, case insensitive */
-	_iregex?: string | undefined | null | Variable<any, string>,
-	_is_null?: boolean | undefined | null | Variable<any, string>,
-	/** does the column match the given pattern */
-	_like?: string | undefined | null | Variable<any, string>,
-	_lt?: string | undefined | null | Variable<any, string>,
-	_lte?: string | undefined | null | Variable<any, string>,
-	_neq?: string | undefined | null | Variable<any, string>,
-	/** does the column NOT match the given case-insensitive pattern */
-	_nilike?: string | undefined | null | Variable<any, string>,
-	_nin?: Array<string> | undefined | null | Variable<any, string>,
-	/** does the column NOT match the given POSIX regular expression, case insensitive */
-	_niregex?: string | undefined | null | Variable<any, string>,
-	/** does the column NOT match the given pattern */
-	_nlike?: string | undefined | null | Variable<any, string>,
-	/** does the column NOT match the given POSIX regular expression, case sensitive */
-	_nregex?: string | undefined | null | Variable<any, string>,
-	/** does the column NOT match the given SQL regular expression */
-	_nsimilar?: string | undefined | null | Variable<any, string>,
-	/** does the column match the given POSIX regular expression, case sensitive */
-	_regex?: string | undefined | null | Variable<any, string>,
-	/** does the column match the given SQL regular expression */
-	_similar?: string | undefined | null | Variable<any, string>
-};
 	["subscription_root"]: AliasType<{
 actor?: [{	/** distinct select on columns */
 	distinct_on?: Array<ValueTypes["actor_select_column"]> | undefined | null | Variable<any, string>,	/** limit the number of rows returned */
@@ -5907,6 +5907,62 @@ export type ResolverInputTypes = {
 	subscription?:ResolverInputTypes["subscription_root"],
 		__typename?: boolean | `@${string}`
 }>;
+	/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
+["Boolean_comparison_exp"]: {
+	_eq?: boolean | undefined | null,
+	_gt?: boolean | undefined | null,
+	_gte?: boolean | undefined | null,
+	_in?: Array<boolean> | undefined | null,
+	_is_null?: boolean | undefined | null,
+	_lt?: boolean | undefined | null,
+	_lte?: boolean | undefined | null,
+	_neq?: boolean | undefined | null,
+	_nin?: Array<boolean> | undefined | null
+};
+	/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
+["Int_comparison_exp"]: {
+	_eq?: number | undefined | null,
+	_gt?: number | undefined | null,
+	_gte?: number | undefined | null,
+	_in?: Array<number> | undefined | null,
+	_is_null?: boolean | undefined | null,
+	_lt?: number | undefined | null,
+	_lte?: number | undefined | null,
+	_neq?: number | undefined | null,
+	_nin?: Array<number> | undefined | null
+};
+	/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
+["String_comparison_exp"]: {
+	_eq?: string | undefined | null,
+	_gt?: string | undefined | null,
+	_gte?: string | undefined | null,
+	/** does the column match the given case-insensitive pattern */
+	_ilike?: string | undefined | null,
+	_in?: Array<string> | undefined | null,
+	/** does the column match the given POSIX regular expression, case insensitive */
+	_iregex?: string | undefined | null,
+	_is_null?: boolean | undefined | null,
+	/** does the column match the given pattern */
+	_like?: string | undefined | null,
+	_lt?: string | undefined | null,
+	_lte?: string | undefined | null,
+	_neq?: string | undefined | null,
+	/** does the column NOT match the given case-insensitive pattern */
+	_nilike?: string | undefined | null,
+	_nin?: Array<string> | undefined | null,
+	/** does the column NOT match the given POSIX regular expression, case insensitive */
+	_niregex?: string | undefined | null,
+	/** does the column NOT match the given pattern */
+	_nlike?: string | undefined | null,
+	/** does the column NOT match the given POSIX regular expression, case sensitive */
+	_nregex?: string | undefined | null,
+	/** does the column NOT match the given SQL regular expression */
+	_nsimilar?: string | undefined | null,
+	/** does the column match the given POSIX regular expression, case sensitive */
+	_regex?: string | undefined | null,
+	/** does the column match the given SQL regular expression */
+	_similar?: string | undefined | null
+};
 	["_text"]:unknown;
 	/** Boolean expression to compare columns of type "_text". All fields are combined with logical 'AND'. */
 ["_text_comparison_exp"]: {
@@ -6411,18 +6467,6 @@ count?: [{	columns?: Array<ResolverInputTypes["address_select_column"]> | undefi
 	city_id?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
 }>;
-	/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
-["Boolean_comparison_exp"]: {
-	_eq?: boolean | undefined | null,
-	_gt?: boolean | undefined | null,
-	_gte?: boolean | undefined | null,
-	_in?: Array<boolean> | undefined | null,
-	_is_null?: boolean | undefined | null,
-	_lt?: boolean | undefined | null,
-	_lte?: boolean | undefined | null,
-	_neq?: boolean | undefined | null,
-	_nin?: Array<boolean> | undefined | null
-};
 	["bpchar"]:unknown;
 	/** Boolean expression to compare columns of type "bpchar". All fields are combined with logical 'AND'. */
 ["bpchar_comparison_exp"]: {
@@ -8152,18 +8196,6 @@ count?: [{	columns?: Array<ResolverInputTypes["film_list_select_column"]> | unde
 	replacement_cost?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
 }>;
-	/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
-["Int_comparison_exp"]: {
-	_eq?: number | undefined | null,
-	_gt?: number | undefined | null,
-	_gte?: number | undefined | null,
-	_in?: Array<number> | undefined | null,
-	_is_null?: boolean | undefined | null,
-	_lt?: number | undefined | null,
-	_lte?: number | undefined | null,
-	_neq?: number | undefined | null,
-	_nin?: Array<number> | undefined | null
-};
 	/** columns and relationships of "inventory" */
 ["inventory"]: AliasType<{
 	film_id?:boolean | `@${string}`,
@@ -10484,38 +10516,6 @@ count?: [{	columns?: Array<ResolverInputTypes["store_select_column"]> | undefine
 	store_id?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
 }>;
-	/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
-["String_comparison_exp"]: {
-	_eq?: string | undefined | null,
-	_gt?: string | undefined | null,
-	_gte?: string | undefined | null,
-	/** does the column match the given case-insensitive pattern */
-	_ilike?: string | undefined | null,
-	_in?: Array<string> | undefined | null,
-	/** does the column match the given POSIX regular expression, case insensitive */
-	_iregex?: string | undefined | null,
-	_is_null?: boolean | undefined | null,
-	/** does the column match the given pattern */
-	_like?: string | undefined | null,
-	_lt?: string | undefined | null,
-	_lte?: string | undefined | null,
-	_neq?: string | undefined | null,
-	/** does the column NOT match the given case-insensitive pattern */
-	_nilike?: string | undefined | null,
-	_nin?: Array<string> | undefined | null,
-	/** does the column NOT match the given POSIX regular expression, case insensitive */
-	_niregex?: string | undefined | null,
-	/** does the column NOT match the given pattern */
-	_nlike?: string | undefined | null,
-	/** does the column NOT match the given POSIX regular expression, case sensitive */
-	_nregex?: string | undefined | null,
-	/** does the column NOT match the given SQL regular expression */
-	_nsimilar?: string | undefined | null,
-	/** does the column match the given POSIX regular expression, case sensitive */
-	_regex?: string | undefined | null,
-	/** does the column match the given SQL regular expression */
-	_similar?: string | undefined | null
-};
 	["subscription_root"]: AliasType<{
 actor?: [{	/** distinct select on columns */
 	distinct_on?: Array<ResolverInputTypes["actor_select_column"]> | undefined | null,	/** limit the number of rows returned */
@@ -10919,6 +10919,62 @@ export type ModelTypes = {
 	query?: ModelTypes["query_root"] | undefined | null,
 	mutation?: ModelTypes["mutation_root"] | undefined | null,
 	subscription?: ModelTypes["subscription_root"] | undefined | null
+};
+	/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
+["Boolean_comparison_exp"]: {
+	_eq?: boolean | undefined | null,
+	_gt?: boolean | undefined | null,
+	_gte?: boolean | undefined | null,
+	_in?: Array<boolean> | undefined | null,
+	_is_null?: boolean | undefined | null,
+	_lt?: boolean | undefined | null,
+	_lte?: boolean | undefined | null,
+	_neq?: boolean | undefined | null,
+	_nin?: Array<boolean> | undefined | null
+};
+	/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
+["Int_comparison_exp"]: {
+	_eq?: number | undefined | null,
+	_gt?: number | undefined | null,
+	_gte?: number | undefined | null,
+	_in?: Array<number> | undefined | null,
+	_is_null?: boolean | undefined | null,
+	_lt?: number | undefined | null,
+	_lte?: number | undefined | null,
+	_neq?: number | undefined | null,
+	_nin?: Array<number> | undefined | null
+};
+	/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
+["String_comparison_exp"]: {
+	_eq?: string | undefined | null,
+	_gt?: string | undefined | null,
+	_gte?: string | undefined | null,
+	/** does the column match the given case-insensitive pattern */
+	_ilike?: string | undefined | null,
+	_in?: Array<string> | undefined | null,
+	/** does the column match the given POSIX regular expression, case insensitive */
+	_iregex?: string | undefined | null,
+	_is_null?: boolean | undefined | null,
+	/** does the column match the given pattern */
+	_like?: string | undefined | null,
+	_lt?: string | undefined | null,
+	_lte?: string | undefined | null,
+	_neq?: string | undefined | null,
+	/** does the column NOT match the given case-insensitive pattern */
+	_nilike?: string | undefined | null,
+	_nin?: Array<string> | undefined | null,
+	/** does the column NOT match the given POSIX regular expression, case insensitive */
+	_niregex?: string | undefined | null,
+	/** does the column NOT match the given pattern */
+	_nlike?: string | undefined | null,
+	/** does the column NOT match the given POSIX regular expression, case sensitive */
+	_nregex?: string | undefined | null,
+	/** does the column NOT match the given SQL regular expression */
+	_nsimilar?: string | undefined | null,
+	/** does the column match the given POSIX regular expression, case sensitive */
+	_regex?: string | undefined | null,
+	/** does the column match the given SQL regular expression */
+	_similar?: string | undefined | null
 };
 	["_text"]:any;
 	/** Boolean expression to compare columns of type "_text". All fields are combined with logical 'AND'. */
@@ -11375,18 +11431,6 @@ export type ModelTypes = {
 ["address_variance_fields"]: {
 		address_id?: number | undefined | null,
 	city_id?: number | undefined | null
-};
-	/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
-["Boolean_comparison_exp"]: {
-	_eq?: boolean | undefined | null,
-	_gt?: boolean | undefined | null,
-	_gte?: boolean | undefined | null,
-	_in?: Array<boolean> | undefined | null,
-	_is_null?: boolean | undefined | null,
-	_lt?: boolean | undefined | null,
-	_lte?: boolean | undefined | null,
-	_neq?: boolean | undefined | null,
-	_nin?: Array<boolean> | undefined | null
 };
 	["bpchar"]:any;
 	/** Boolean expression to compare columns of type "bpchar". All fields are combined with logical 'AND'. */
@@ -12968,18 +13012,6 @@ export type ModelTypes = {
 	rental_duration?: number | undefined | null,
 	rental_rate?: number | undefined | null,
 	replacement_cost?: number | undefined | null
-};
-	/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
-["Int_comparison_exp"]: {
-	_eq?: number | undefined | null,
-	_gt?: number | undefined | null,
-	_gte?: number | undefined | null,
-	_in?: Array<number> | undefined | null,
-	_is_null?: boolean | undefined | null,
-	_lt?: number | undefined | null,
-	_lte?: number | undefined | null,
-	_neq?: number | undefined | null,
-	_nin?: Array<number> | undefined | null
 };
 	/** columns and relationships of "inventory" */
 ["inventory"]: {
@@ -14919,38 +14951,6 @@ export type ModelTypes = {
 	manager_staff_id?: number | undefined | null,
 	store_id?: number | undefined | null
 };
-	/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
-["String_comparison_exp"]: {
-	_eq?: string | undefined | null,
-	_gt?: string | undefined | null,
-	_gte?: string | undefined | null,
-	/** does the column match the given case-insensitive pattern */
-	_ilike?: string | undefined | null,
-	_in?: Array<string> | undefined | null,
-	/** does the column match the given POSIX regular expression, case insensitive */
-	_iregex?: string | undefined | null,
-	_is_null?: boolean | undefined | null,
-	/** does the column match the given pattern */
-	_like?: string | undefined | null,
-	_lt?: string | undefined | null,
-	_lte?: string | undefined | null,
-	_neq?: string | undefined | null,
-	/** does the column NOT match the given case-insensitive pattern */
-	_nilike?: string | undefined | null,
-	_nin?: Array<string> | undefined | null,
-	/** does the column NOT match the given POSIX regular expression, case insensitive */
-	_niregex?: string | undefined | null,
-	/** does the column NOT match the given pattern */
-	_nlike?: string | undefined | null,
-	/** does the column NOT match the given POSIX regular expression, case sensitive */
-	_nregex?: string | undefined | null,
-	/** does the column NOT match the given SQL regular expression */
-	_nsimilar?: string | undefined | null,
-	/** does the column match the given POSIX regular expression, case sensitive */
-	_regex?: string | undefined | null,
-	/** does the column match the given SQL regular expression */
-	_similar?: string | undefined | null
-};
 	["subscription_root"]: {
 		/** fetch data from the table: "actor" */
 	actor: Array<ModelTypes["actor"]>,
@@ -15144,7 +15144,63 @@ export type ModelTypes = {
     }
 
 export type GraphQLTypes = {
-    ["_text"]: "scalar" & { name: "_text" };
+    /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
+["Boolean_comparison_exp"]: {
+		_eq?: boolean | undefined | null,
+	_gt?: boolean | undefined | null,
+	_gte?: boolean | undefined | null,
+	_in?: Array<boolean> | undefined | null,
+	_is_null?: boolean | undefined | null,
+	_lt?: boolean | undefined | null,
+	_lte?: boolean | undefined | null,
+	_neq?: boolean | undefined | null,
+	_nin?: Array<boolean> | undefined | null
+};
+	/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
+["Int_comparison_exp"]: {
+		_eq?: number | undefined | null,
+	_gt?: number | undefined | null,
+	_gte?: number | undefined | null,
+	_in?: Array<number> | undefined | null,
+	_is_null?: boolean | undefined | null,
+	_lt?: number | undefined | null,
+	_lte?: number | undefined | null,
+	_neq?: number | undefined | null,
+	_nin?: Array<number> | undefined | null
+};
+	/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
+["String_comparison_exp"]: {
+		_eq?: string | undefined | null,
+	_gt?: string | undefined | null,
+	_gte?: string | undefined | null,
+	/** does the column match the given case-insensitive pattern */
+	_ilike?: string | undefined | null,
+	_in?: Array<string> | undefined | null,
+	/** does the column match the given POSIX regular expression, case insensitive */
+	_iregex?: string | undefined | null,
+	_is_null?: boolean | undefined | null,
+	/** does the column match the given pattern */
+	_like?: string | undefined | null,
+	_lt?: string | undefined | null,
+	_lte?: string | undefined | null,
+	_neq?: string | undefined | null,
+	/** does the column NOT match the given case-insensitive pattern */
+	_nilike?: string | undefined | null,
+	_nin?: Array<string> | undefined | null,
+	/** does the column NOT match the given POSIX regular expression, case insensitive */
+	_niregex?: string | undefined | null,
+	/** does the column NOT match the given pattern */
+	_nlike?: string | undefined | null,
+	/** does the column NOT match the given POSIX regular expression, case sensitive */
+	_nregex?: string | undefined | null,
+	/** does the column NOT match the given SQL regular expression */
+	_nsimilar?: string | undefined | null,
+	/** does the column match the given POSIX regular expression, case sensitive */
+	_regex?: string | undefined | null,
+	/** does the column match the given SQL regular expression */
+	_similar?: string | undefined | null
+};
+	["_text"]: "scalar" & { name: "_text" };
 	/** Boolean expression to compare columns of type "_text". All fields are combined with logical 'AND'. */
 ["_text_comparison_exp"]: {
 		_eq?: GraphQLTypes["_text"] | undefined | null,
@@ -15647,18 +15703,6 @@ export type GraphQLTypes = {
 	__typename: "address_variance_fields",
 	address_id?: number | undefined | null,
 	city_id?: number | undefined | null
-};
-	/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
-["Boolean_comparison_exp"]: {
-		_eq?: boolean | undefined | null,
-	_gt?: boolean | undefined | null,
-	_gte?: boolean | undefined | null,
-	_in?: Array<boolean> | undefined | null,
-	_is_null?: boolean | undefined | null,
-	_lt?: boolean | undefined | null,
-	_lte?: boolean | undefined | null,
-	_neq?: boolean | undefined | null,
-	_nin?: Array<boolean> | undefined | null
 };
 	["bpchar"]: "scalar" & { name: "bpchar" };
 	/** Boolean expression to compare columns of type "bpchar". All fields are combined with logical 'AND'. */
@@ -17388,18 +17432,6 @@ export type GraphQLTypes = {
 	rental_duration?: number | undefined | null,
 	rental_rate?: number | undefined | null,
 	replacement_cost?: number | undefined | null
-};
-	/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
-["Int_comparison_exp"]: {
-		_eq?: number | undefined | null,
-	_gt?: number | undefined | null,
-	_gte?: number | undefined | null,
-	_in?: Array<number> | undefined | null,
-	_is_null?: boolean | undefined | null,
-	_lt?: number | undefined | null,
-	_lte?: number | undefined | null,
-	_neq?: number | undefined | null,
-	_nin?: Array<number> | undefined | null
 };
 	/** columns and relationships of "inventory" */
 ["inventory"]: {
@@ -19500,38 +19532,6 @@ export type GraphQLTypes = {
 	manager_staff_id?: number | undefined | null,
 	store_id?: number | undefined | null
 };
-	/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
-["String_comparison_exp"]: {
-		_eq?: string | undefined | null,
-	_gt?: string | undefined | null,
-	_gte?: string | undefined | null,
-	/** does the column match the given case-insensitive pattern */
-	_ilike?: string | undefined | null,
-	_in?: Array<string> | undefined | null,
-	/** does the column match the given POSIX regular expression, case insensitive */
-	_iregex?: string | undefined | null,
-	_is_null?: boolean | undefined | null,
-	/** does the column match the given pattern */
-	_like?: string | undefined | null,
-	_lt?: string | undefined | null,
-	_lte?: string | undefined | null,
-	_neq?: string | undefined | null,
-	/** does the column NOT match the given case-insensitive pattern */
-	_nilike?: string | undefined | null,
-	_nin?: Array<string> | undefined | null,
-	/** does the column NOT match the given POSIX regular expression, case insensitive */
-	_niregex?: string | undefined | null,
-	/** does the column NOT match the given pattern */
-	_nlike?: string | undefined | null,
-	/** does the column NOT match the given POSIX regular expression, case sensitive */
-	_nregex?: string | undefined | null,
-	/** does the column NOT match the given SQL regular expression */
-	_nsimilar?: string | undefined | null,
-	/** does the column match the given POSIX regular expression, case sensitive */
-	_regex?: string | undefined | null,
-	/** does the column match the given SQL regular expression */
-	_similar?: string | undefined | null
-};
 	["subscription_root"]: {
 	__typename: "subscription_root",
 	/** fetch data from the table: "actor" */
@@ -20127,6 +20127,9 @@ export enum store_update_column {
 }
 
 type ZEUS_VARIABLES = {
+	["Boolean_comparison_exp"]: ValueTypes["Boolean_comparison_exp"];
+	["Int_comparison_exp"]: ValueTypes["Int_comparison_exp"];
+	["String_comparison_exp"]: ValueTypes["String_comparison_exp"];
 	["_text"]: ValueTypes["_text"];
 	["_text_comparison_exp"]: ValueTypes["_text_comparison_exp"];
 	["actor_bool_exp"]: ValueTypes["actor_bool_exp"];
@@ -20160,7 +20163,6 @@ type ZEUS_VARIABLES = {
 	["address_stream_cursor_value_input"]: ValueTypes["address_stream_cursor_value_input"];
 	["address_update_column"]: ValueTypes["address_update_column"];
 	["address_updates"]: ValueTypes["address_updates"];
-	["Boolean_comparison_exp"]: ValueTypes["Boolean_comparison_exp"];
 	["bpchar"]: ValueTypes["bpchar"];
 	["bpchar_comparison_exp"]: ValueTypes["bpchar_comparison_exp"];
 	["bytea"]: ValueTypes["bytea"];
@@ -20269,7 +20271,6 @@ type ZEUS_VARIABLES = {
 	["film_stream_cursor_value_input"]: ValueTypes["film_stream_cursor_value_input"];
 	["film_update_column"]: ValueTypes["film_update_column"];
 	["film_updates"]: ValueTypes["film_updates"];
-	["Int_comparison_exp"]: ValueTypes["Int_comparison_exp"];
 	["inventory_bool_exp"]: ValueTypes["inventory_bool_exp"];
 	["inventory_constraint"]: ValueTypes["inventory_constraint"];
 	["inventory_inc_input"]: ValueTypes["inventory_inc_input"];
@@ -20375,7 +20376,6 @@ type ZEUS_VARIABLES = {
 	["store_stream_cursor_value_input"]: ValueTypes["store_stream_cursor_value_input"];
 	["store_update_column"]: ValueTypes["store_update_column"];
 	["store_updates"]: ValueTypes["store_updates"];
-	["String_comparison_exp"]: ValueTypes["String_comparison_exp"];
 	["timestamp"]: ValueTypes["timestamp"];
 	["timestamp_comparison_exp"]: ValueTypes["timestamp_comparison_exp"];
 	["tsvector"]: ValueTypes["tsvector"];

@@ -1,6 +1,15 @@
 /* eslint-disable */
 
 export const AllTypesProps: Record<string,any> = {
+	Boolean_comparison_exp:{
+
+	},
+	Int_comparison_exp:{
+
+	},
+	String_comparison_exp:{
+
+	},
 	_text: `scalar._text` as const,
 	_text_comparison_exp:{
 		_eq:"_text",
@@ -154,9 +163,6 @@ export const AllTypesProps: Record<string,any> = {
 		_inc:"address_inc_input",
 		_set:"address_set_input",
 		where:"address_bool_exp"
-	},
-	Boolean_comparison_exp:{
-
 	},
 	bpchar: `scalar.bpchar` as const,
 	bpchar_comparison_exp:{
@@ -720,9 +726,6 @@ export const AllTypesProps: Record<string,any> = {
 		_inc:"film_inc_input",
 		_set:"film_set_input",
 		where:"film_bool_exp"
-	},
-	Int_comparison_exp:{
-
 	},
 	inventory_aggregate_fields:{
 		count:{
@@ -1944,9 +1947,6 @@ export const AllTypesProps: Record<string,any> = {
 		_inc:"store_inc_input",
 		_set:"store_set_input",
 		where:"store_bool_exp"
-	},
-	String_comparison_exp:{
-
 	},
 	subscription_root:{
 		actor:{
