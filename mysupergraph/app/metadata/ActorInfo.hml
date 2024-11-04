@@ -1,0 +1,138 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: ActorInfo
+  fields:
+    - name: actorId
+      type: Int4
+    - name: filmInfo
+      type: Text
+    - name: firstName
+      type: Varchar
+    - name: lastName
+      type: Varchar
+  graphql:
+    typeName: ActorInfo
+    inputTypeName: ActorInfoInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: actor_info
+      fieldMapping:
+        actorId:
+          column:
+            name: actor_id
+        filmInfo:
+          column:
+            name: film_info
+        firstName:
+          column:
+            name: first_name
+        lastName:
+          column:
+            name: last_name
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: ActorInfo
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - actorId
+          - filmInfo
+          - firstName
+          - lastName
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: ActorInfoBoolExp
+  operand:
+    object:
+      type: ActorInfo
+      comparableFields:
+        - fieldName: actorId
+          booleanExpressionType: Int4BoolExp
+        - fieldName: filmInfo
+          booleanExpressionType: TextBoolExp
+        - fieldName: firstName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: lastName
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: ActorInfoBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: ActorInfoAggExp
+  operand:
+    object:
+      aggregatedType: ActorInfo
+      aggregatableFields:
+        - fieldName: actorId
+          aggregateExpression: Int4AggExp
+        - fieldName: filmInfo
+          aggregateExpression: TextAggExp
+        - fieldName: firstName
+          aggregateExpression: VarcharAggExp
+        - fieldName: lastName
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: ActorInfoAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: ActorInfo
+  objectType: ActorInfo
+  source:
+    dataConnectorName: my_pg
+    collection: actor_info
+  filterExpressionType: ActorInfoBoolExp
+  aggregateExpression: ActorInfoAggExp
+  orderableFields:
+    - fieldName: actorId
+      orderByDirections:
+        enableAll: true
+    - fieldName: filmInfo
+      orderByDirections:
+        enableAll: true
+    - fieldName: firstName
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastName
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: actorInfo
+    selectUniques: []
+    orderByExpressionType: ActorInfoOrderBy
+    filterInputTypeName: ActorInfoFilterInput
+    aggregate:
+      queryRootField: actorInfoAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: ActorInfo
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

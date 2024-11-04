@@ -1,0 +1,180 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: HdbCatalogHdbCronEvents
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Text!
+    - name: nextRetryAt
+      type: Timestamptz
+    - name: scheduledTime
+      type: Timestamptz!
+    - name: status
+      type: Text!
+    - name: tries
+      type: Int4!
+    - name: triggerName
+      type: Text!
+  graphql:
+    typeName: HdbCatalogHdbCronEvents
+    inputTypeName: HdbCatalogHdbCronEventsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: hdb_catalog_hdb_cron_events
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        nextRetryAt:
+          column:
+            name: next_retry_at
+        scheduledTime:
+          column:
+            name: scheduled_time
+        status:
+          column:
+            name: status
+        tries:
+          column:
+            name: tries
+        triggerName:
+          column:
+            name: trigger_name
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: HdbCatalogHdbCronEvents
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - nextRetryAt
+          - scheduledTime
+          - status
+          - tries
+          - triggerName
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: HdbCatalogHdbCronEventsBoolExp
+  operand:
+    object:
+      type: HdbCatalogHdbCronEvents
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: TextBoolExp
+        - fieldName: nextRetryAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: scheduledTime
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: status
+          booleanExpressionType: TextBoolExp
+        - fieldName: tries
+          booleanExpressionType: Int4BoolExp
+        - fieldName: triggerName
+          booleanExpressionType: TextBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: HdbCatalogHdbCronEventsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: HdbCatalogHdbCronEventsAggExp
+  operand:
+    object:
+      aggregatedType: HdbCatalogHdbCronEvents
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: TextAggExp
+        - fieldName: nextRetryAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: scheduledTime
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: status
+          aggregateExpression: TextAggExp
+        - fieldName: tries
+          aggregateExpression: Int4AggExp
+        - fieldName: triggerName
+          aggregateExpression: TextAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: HdbCatalogHdbCronEventsAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: HdbCatalogHdbCronEvents
+  objectType: HdbCatalogHdbCronEvents
+  source:
+    dataConnectorName: my_pg
+    collection: hdb_catalog_hdb_cron_events
+  filterExpressionType: HdbCatalogHdbCronEventsBoolExp
+  aggregateExpression: HdbCatalogHdbCronEventsAggExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: nextRetryAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: scheduledTime
+      orderByDirections:
+        enableAll: true
+    - fieldName: status
+      orderByDirections:
+        enableAll: true
+    - fieldName: tries
+      orderByDirections:
+        enableAll: true
+    - fieldName: triggerName
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: hdbCatalogHdbCronEvents
+    selectUniques:
+      - queryRootField: hdbCatalogHdbCronEventsById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: HdbCatalogHdbCronEventsOrderBy
+    filterInputTypeName: HdbCatalogHdbCronEventsFilterInput
+    aggregate:
+      queryRootField: hdbCatalogHdbCronEventsAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: HdbCatalogHdbCronEvents
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

@@ -1,0 +1,128 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Country
+  fields:
+    - name: country
+      type: Varchar!
+    - name: countryId
+      type: Int4!
+    - name: lastUpdate
+      type: Timestamp!
+  graphql:
+    typeName: Country
+    inputTypeName: CountryInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: country
+      fieldMapping:
+        country:
+          column:
+            name: country
+        countryId:
+          column:
+            name: country_id
+        lastUpdate:
+          column:
+            name: last_update
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Country
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - country
+          - countryId
+          - lastUpdate
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: CountryBoolExp
+  operand:
+    object:
+      type: Country
+      comparableFields:
+        - fieldName: country
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: countryId
+          booleanExpressionType: Int4BoolExp
+        - fieldName: lastUpdate
+          booleanExpressionType: TimestampBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: CountryBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: CountryAggExp
+  operand:
+    object:
+      aggregatedType: Country
+      aggregatableFields:
+        - fieldName: country
+          aggregateExpression: VarcharAggExp
+        - fieldName: countryId
+          aggregateExpression: Int4AggExp
+        - fieldName: lastUpdate
+          aggregateExpression: TimestampAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: CountryAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Country
+  objectType: Country
+  source:
+    dataConnectorName: my_pg
+    collection: country
+  filterExpressionType: CountryBoolExp
+  aggregateExpression: CountryAggExp
+  orderableFields:
+    - fieldName: country
+      orderByDirections:
+        enableAll: true
+    - fieldName: countryId
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastUpdate
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: country
+    selectUniques:
+      - queryRootField: countryByCountryId
+        uniqueIdentifier:
+          - countryId
+    orderByExpressionType: CountryOrderBy
+    filterInputTypeName: CountryFilterInput
+    aggregate:
+      queryRootField: countryAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Country
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

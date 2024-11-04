@@ -1,0 +1,232 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: HdbCatalogHdbScheduledEvents
+  fields:
+    - name: comment
+      type: Text
+    - name: createdAt
+      type: Timestamptz
+    - name: headerConf
+      type: Json
+    - name: id
+      type: Text!
+    - name: nextRetryAt
+      type: Timestamptz
+    - name: payload
+      type: Json
+    - name: retryConf
+      type: Json
+    - name: scheduledTime
+      type: Timestamptz!
+    - name: status
+      type: Text!
+    - name: tries
+      type: Int4!
+    - name: webhookConf
+      type: Json!
+  graphql:
+    typeName: HdbCatalogHdbScheduledEvents
+    inputTypeName: HdbCatalogHdbScheduledEventsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: hdb_catalog_hdb_scheduled_events
+      fieldMapping:
+        comment:
+          column:
+            name: comment
+        createdAt:
+          column:
+            name: created_at
+        headerConf:
+          column:
+            name: header_conf
+        id:
+          column:
+            name: id
+        nextRetryAt:
+          column:
+            name: next_retry_at
+        payload:
+          column:
+            name: payload
+        retryConf:
+          column:
+            name: retry_conf
+        scheduledTime:
+          column:
+            name: scheduled_time
+        status:
+          column:
+            name: status
+        tries:
+          column:
+            name: tries
+        webhookConf:
+          column:
+            name: webhook_conf
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: HdbCatalogHdbScheduledEvents
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - comment
+          - createdAt
+          - headerConf
+          - id
+          - nextRetryAt
+          - payload
+          - retryConf
+          - scheduledTime
+          - status
+          - tries
+          - webhookConf
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: HdbCatalogHdbScheduledEventsBoolExp
+  operand:
+    object:
+      type: HdbCatalogHdbScheduledEvents
+      comparableFields:
+        - fieldName: comment
+          booleanExpressionType: TextBoolExp
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: headerConf
+          booleanExpressionType: JsonBoolExp
+        - fieldName: id
+          booleanExpressionType: TextBoolExp
+        - fieldName: nextRetryAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: payload
+          booleanExpressionType: JsonBoolExp
+        - fieldName: retryConf
+          booleanExpressionType: JsonBoolExp
+        - fieldName: scheduledTime
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: status
+          booleanExpressionType: TextBoolExp
+        - fieldName: tries
+          booleanExpressionType: Int4BoolExp
+        - fieldName: webhookConf
+          booleanExpressionType: JsonBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: HdbCatalogHdbScheduledEventsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: HdbCatalogHdbScheduledEventsAggExp
+  operand:
+    object:
+      aggregatedType: HdbCatalogHdbScheduledEvents
+      aggregatableFields:
+        - fieldName: comment
+          aggregateExpression: TextAggExp
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: headerConf
+          aggregateExpression: JsonAggExp
+        - fieldName: id
+          aggregateExpression: TextAggExp
+        - fieldName: nextRetryAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: payload
+          aggregateExpression: JsonAggExp
+        - fieldName: retryConf
+          aggregateExpression: JsonAggExp
+        - fieldName: scheduledTime
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: status
+          aggregateExpression: TextAggExp
+        - fieldName: tries
+          aggregateExpression: Int4AggExp
+        - fieldName: webhookConf
+          aggregateExpression: JsonAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: HdbCatalogHdbScheduledEventsAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: HdbCatalogHdbScheduledEvents
+  objectType: HdbCatalogHdbScheduledEvents
+  source:
+    dataConnectorName: my_pg
+    collection: hdb_catalog_hdb_scheduled_events
+  filterExpressionType: HdbCatalogHdbScheduledEventsBoolExp
+  aggregateExpression: HdbCatalogHdbScheduledEventsAggExp
+  orderableFields:
+    - fieldName: comment
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: headerConf
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: nextRetryAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: payload
+      orderByDirections:
+        enableAll: true
+    - fieldName: retryConf
+      orderByDirections:
+        enableAll: true
+    - fieldName: scheduledTime
+      orderByDirections:
+        enableAll: true
+    - fieldName: status
+      orderByDirections:
+        enableAll: true
+    - fieldName: tries
+      orderByDirections:
+        enableAll: true
+    - fieldName: webhookConf
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: hdbCatalogHdbScheduledEvents
+    selectUniques:
+      - queryRootField: hdbCatalogHdbScheduledEventsById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: HdbCatalogHdbScheduledEventsOrderBy
+    filterInputTypeName: HdbCatalogHdbScheduledEventsFilterInput
+    aggregate:
+      queryRootField: hdbCatalogHdbScheduledEventsAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: HdbCatalogHdbScheduledEvents
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

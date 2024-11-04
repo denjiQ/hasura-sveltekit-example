@@ -1,0 +1,180 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Rental
+  fields:
+    - name: customerId
+      type: Int2!
+    - name: inventoryId
+      type: Int4!
+    - name: lastUpdate
+      type: Timestamp!
+    - name: rentalDate
+      type: Timestamp!
+    - name: rentalId
+      type: Int4!
+    - name: returnDate
+      type: Timestamp
+    - name: staffId
+      type: Int2!
+  graphql:
+    typeName: Rental
+    inputTypeName: RentalInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: rental
+      fieldMapping:
+        customerId:
+          column:
+            name: customer_id
+        inventoryId:
+          column:
+            name: inventory_id
+        lastUpdate:
+          column:
+            name: last_update
+        rentalDate:
+          column:
+            name: rental_date
+        rentalId:
+          column:
+            name: rental_id
+        returnDate:
+          column:
+            name: return_date
+        staffId:
+          column:
+            name: staff_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Rental
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - customerId
+          - inventoryId
+          - lastUpdate
+          - rentalDate
+          - rentalId
+          - returnDate
+          - staffId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: RentalBoolExp
+  operand:
+    object:
+      type: Rental
+      comparableFields:
+        - fieldName: customerId
+          booleanExpressionType: Int2BoolExp
+        - fieldName: inventoryId
+          booleanExpressionType: Int4BoolExp
+        - fieldName: lastUpdate
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: rentalDate
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: rentalId
+          booleanExpressionType: Int4BoolExp
+        - fieldName: returnDate
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: staffId
+          booleanExpressionType: Int2BoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: RentalBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: RentalAggExp
+  operand:
+    object:
+      aggregatedType: Rental
+      aggregatableFields:
+        - fieldName: customerId
+          aggregateExpression: Int2AggExp
+        - fieldName: inventoryId
+          aggregateExpression: Int4AggExp
+        - fieldName: lastUpdate
+          aggregateExpression: TimestampAggExp
+        - fieldName: rentalDate
+          aggregateExpression: TimestampAggExp
+        - fieldName: rentalId
+          aggregateExpression: Int4AggExp
+        - fieldName: returnDate
+          aggregateExpression: TimestampAggExp
+        - fieldName: staffId
+          aggregateExpression: Int2AggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: RentalAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Rental
+  objectType: Rental
+  source:
+    dataConnectorName: my_pg
+    collection: rental
+  filterExpressionType: RentalBoolExp
+  aggregateExpression: RentalAggExp
+  orderableFields:
+    - fieldName: customerId
+      orderByDirections:
+        enableAll: true
+    - fieldName: inventoryId
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastUpdate
+      orderByDirections:
+        enableAll: true
+    - fieldName: rentalDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: rentalId
+      orderByDirections:
+        enableAll: true
+    - fieldName: returnDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: staffId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: rental
+    selectUniques:
+      - queryRootField: rentalByRentalId
+        uniqueIdentifier:
+          - rentalId
+    orderByExpressionType: RentalOrderBy
+    filterInputTypeName: RentalFilterInput
+    aggregate:
+      queryRootField: rentalAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Rental
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

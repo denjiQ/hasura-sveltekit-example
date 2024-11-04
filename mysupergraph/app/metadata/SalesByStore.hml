@@ -1,0 +1,125 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: SalesByStore
+  fields:
+    - name: manager
+      type: Text
+    - name: store
+      type: Text
+    - name: totalSales
+      type: Numeric
+  graphql:
+    typeName: SalesByStore
+    inputTypeName: SalesByStoreInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: sales_by_store
+      fieldMapping:
+        manager:
+          column:
+            name: manager
+        store:
+          column:
+            name: store
+        totalSales:
+          column:
+            name: total_sales
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: SalesByStore
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - manager
+          - store
+          - totalSales
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: SalesByStoreBoolExp
+  operand:
+    object:
+      type: SalesByStore
+      comparableFields:
+        - fieldName: manager
+          booleanExpressionType: TextBoolExp
+        - fieldName: store
+          booleanExpressionType: TextBoolExp
+        - fieldName: totalSales
+          booleanExpressionType: NumericBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: SalesByStoreBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: SalesByStoreAggExp
+  operand:
+    object:
+      aggregatedType: SalesByStore
+      aggregatableFields:
+        - fieldName: manager
+          aggregateExpression: TextAggExp
+        - fieldName: store
+          aggregateExpression: TextAggExp
+        - fieldName: totalSales
+          aggregateExpression: NumericAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: SalesByStoreAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: SalesByStore
+  objectType: SalesByStore
+  source:
+    dataConnectorName: my_pg
+    collection: sales_by_store
+  filterExpressionType: SalesByStoreBoolExp
+  aggregateExpression: SalesByStoreAggExp
+  orderableFields:
+    - fieldName: manager
+      orderByDirections:
+        enableAll: true
+    - fieldName: store
+      orderByDirections:
+        enableAll: true
+    - fieldName: totalSales
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: salesByStore
+    selectUniques: []
+    orderByExpressionType: SalesByStoreOrderBy
+    filterInputTypeName: SalesByStoreFilterInput
+    aggregate:
+      queryRootField: salesByStoreAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: SalesByStore
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

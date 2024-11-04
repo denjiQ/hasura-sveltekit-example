@@ -1,0 +1,193 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Address
+  fields:
+    - name: address
+      type: Varchar!
+    - name: addressId
+      type: Int4!
+    - name: address2
+      type: Varchar
+    - name: cityId
+      type: Int2!
+    - name: district
+      type: Varchar!
+    - name: lastUpdate
+      type: Timestamp!
+    - name: phone
+      type: Varchar!
+    - name: postalCode
+      type: Varchar
+  graphql:
+    typeName: Address
+    inputTypeName: AddressInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: address
+      fieldMapping:
+        address:
+          column:
+            name: address
+        addressId:
+          column:
+            name: address_id
+        address2:
+          column:
+            name: address2
+        cityId:
+          column:
+            name: city_id
+        district:
+          column:
+            name: district
+        lastUpdate:
+          column:
+            name: last_update
+        phone:
+          column:
+            name: phone
+        postalCode:
+          column:
+            name: postal_code
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Address
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - address
+          - addressId
+          - address2
+          - cityId
+          - district
+          - lastUpdate
+          - phone
+          - postalCode
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AddressBoolExp
+  operand:
+    object:
+      type: Address
+      comparableFields:
+        - fieldName: address
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: addressId
+          booleanExpressionType: Int4BoolExp
+        - fieldName: address2
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: cityId
+          booleanExpressionType: Int2BoolExp
+        - fieldName: district
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: lastUpdate
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: phone
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: postalCode
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AddressBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AddressAggExp
+  operand:
+    object:
+      aggregatedType: Address
+      aggregatableFields:
+        - fieldName: address
+          aggregateExpression: VarcharAggExp
+        - fieldName: addressId
+          aggregateExpression: Int4AggExp
+        - fieldName: address2
+          aggregateExpression: VarcharAggExp
+        - fieldName: cityId
+          aggregateExpression: Int2AggExp
+        - fieldName: district
+          aggregateExpression: VarcharAggExp
+        - fieldName: lastUpdate
+          aggregateExpression: TimestampAggExp
+        - fieldName: phone
+          aggregateExpression: VarcharAggExp
+        - fieldName: postalCode
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AddressAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Address
+  objectType: Address
+  source:
+    dataConnectorName: my_pg
+    collection: address
+  filterExpressionType: AddressBoolExp
+  aggregateExpression: AddressAggExp
+  orderableFields:
+    - fieldName: address
+      orderByDirections:
+        enableAll: true
+    - fieldName: addressId
+      orderByDirections:
+        enableAll: true
+    - fieldName: address2
+      orderByDirections:
+        enableAll: true
+    - fieldName: cityId
+      orderByDirections:
+        enableAll: true
+    - fieldName: district
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastUpdate
+      orderByDirections:
+        enableAll: true
+    - fieldName: phone
+      orderByDirections:
+        enableAll: true
+    - fieldName: postalCode
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: address
+    selectUniques:
+      - queryRootField: addressByAddressId
+        uniqueIdentifier:
+          - addressId
+    orderByExpressionType: AddressOrderBy
+    filterInputTypeName: AddressFilterInput
+    aggregate:
+      queryRootField: addressAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Address
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

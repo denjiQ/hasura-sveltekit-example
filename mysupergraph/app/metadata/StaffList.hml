@@ -1,0 +1,190 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: StaffList
+  fields:
+    - name: address
+      type: Varchar
+    - name: city
+      type: Varchar
+    - name: country
+      type: Varchar
+    - name: id
+      type: Int4
+    - name: name
+      type: Text
+    - name: phone
+      type: Varchar
+    - name: sid
+      type: Int2
+    - name: zipCode
+      type: Varchar
+  graphql:
+    typeName: StaffList
+    inputTypeName: StaffListInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: staff_list
+      fieldMapping:
+        address:
+          column:
+            name: address
+        city:
+          column:
+            name: city
+        country:
+          column:
+            name: country
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        phone:
+          column:
+            name: phone
+        sid:
+          column:
+            name: sid
+        zipCode:
+          column:
+            name: zip code
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: StaffList
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - address
+          - city
+          - country
+          - id
+          - name
+          - phone
+          - sid
+          - zipCode
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: StaffListBoolExp
+  operand:
+    object:
+      type: StaffList
+      comparableFields:
+        - fieldName: address
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: city
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: country
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: Int4BoolExp
+        - fieldName: name
+          booleanExpressionType: TextBoolExp
+        - fieldName: phone
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: sid
+          booleanExpressionType: Int2BoolExp
+        - fieldName: zipCode
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: StaffListBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: StaffListAggExp
+  operand:
+    object:
+      aggregatedType: StaffList
+      aggregatableFields:
+        - fieldName: address
+          aggregateExpression: VarcharAggExp
+        - fieldName: city
+          aggregateExpression: VarcharAggExp
+        - fieldName: country
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: Int4AggExp
+        - fieldName: name
+          aggregateExpression: TextAggExp
+        - fieldName: phone
+          aggregateExpression: VarcharAggExp
+        - fieldName: sid
+          aggregateExpression: Int2AggExp
+        - fieldName: zipCode
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: StaffListAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: StaffList
+  objectType: StaffList
+  source:
+    dataConnectorName: my_pg
+    collection: staff_list
+  filterExpressionType: StaffListBoolExp
+  aggregateExpression: StaffListAggExp
+  orderableFields:
+    - fieldName: address
+      orderByDirections:
+        enableAll: true
+    - fieldName: city
+      orderByDirections:
+        enableAll: true
+    - fieldName: country
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: phone
+      orderByDirections:
+        enableAll: true
+    - fieldName: sid
+      orderByDirections:
+        enableAll: true
+    - fieldName: zipCode
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: staffList
+    selectUniques: []
+    orderByExpressionType: StaffListOrderBy
+    filterInputTypeName: StaffListFilterInput
+    aggregate:
+      queryRootField: staffListAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: StaffList
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

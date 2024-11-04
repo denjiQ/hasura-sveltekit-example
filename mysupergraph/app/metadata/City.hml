@@ -1,0 +1,141 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: City
+  fields:
+    - name: city
+      type: Varchar!
+    - name: cityId
+      type: Int4!
+    - name: countryId
+      type: Int2!
+    - name: lastUpdate
+      type: Timestamp!
+  graphql:
+    typeName: City
+    inputTypeName: CityInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: city
+      fieldMapping:
+        city:
+          column:
+            name: city
+        cityId:
+          column:
+            name: city_id
+        countryId:
+          column:
+            name: country_id
+        lastUpdate:
+          column:
+            name: last_update
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: City
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - city
+          - cityId
+          - countryId
+          - lastUpdate
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: CityBoolExp
+  operand:
+    object:
+      type: City
+      comparableFields:
+        - fieldName: city
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: cityId
+          booleanExpressionType: Int4BoolExp
+        - fieldName: countryId
+          booleanExpressionType: Int2BoolExp
+        - fieldName: lastUpdate
+          booleanExpressionType: TimestampBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: CityBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: CityAggExp
+  operand:
+    object:
+      aggregatedType: City
+      aggregatableFields:
+        - fieldName: city
+          aggregateExpression: VarcharAggExp
+        - fieldName: cityId
+          aggregateExpression: Int4AggExp
+        - fieldName: countryId
+          aggregateExpression: Int2AggExp
+        - fieldName: lastUpdate
+          aggregateExpression: TimestampAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: CityAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: City
+  objectType: City
+  source:
+    dataConnectorName: my_pg
+    collection: city
+  filterExpressionType: CityBoolExp
+  aggregateExpression: CityAggExp
+  orderableFields:
+    - fieldName: city
+      orderByDirections:
+        enableAll: true
+    - fieldName: cityId
+      orderByDirections:
+        enableAll: true
+    - fieldName: countryId
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastUpdate
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: city
+    selectUniques:
+      - queryRootField: cityByCityId
+        uniqueIdentifier:
+          - cityId
+    orderByExpressionType: CityOrderBy
+    filterInputTypeName: CityFilterInput
+    aggregate:
+      queryRootField: cityAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: City
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

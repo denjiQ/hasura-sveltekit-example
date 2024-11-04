@@ -1,0 +1,232 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Staff
+  fields:
+    - name: active
+      type: Bool!
+    - name: addressId
+      type: Int2!
+    - name: email
+      type: Varchar
+    - name: firstName
+      type: Varchar!
+    - name: lastName
+      type: Varchar!
+    - name: lastUpdate
+      type: Timestamp!
+    - name: password
+      type: Varchar
+    - name: picture
+      type: Bytea
+    - name: staffId
+      type: Int4!
+    - name: storeId
+      type: Int2!
+    - name: username
+      type: Varchar!
+  graphql:
+    typeName: Staff
+    inputTypeName: StaffInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: staff
+      fieldMapping:
+        active:
+          column:
+            name: active
+        addressId:
+          column:
+            name: address_id
+        email:
+          column:
+            name: email
+        firstName:
+          column:
+            name: first_name
+        lastName:
+          column:
+            name: last_name
+        lastUpdate:
+          column:
+            name: last_update
+        password:
+          column:
+            name: password
+        picture:
+          column:
+            name: picture
+        staffId:
+          column:
+            name: staff_id
+        storeId:
+          column:
+            name: store_id
+        username:
+          column:
+            name: username
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Staff
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - active
+          - addressId
+          - email
+          - firstName
+          - lastName
+          - lastUpdate
+          - password
+          - picture
+          - staffId
+          - storeId
+          - username
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: StaffBoolExp
+  operand:
+    object:
+      type: Staff
+      comparableFields:
+        - fieldName: active
+          booleanExpressionType: BoolBoolExp
+        - fieldName: addressId
+          booleanExpressionType: Int2BoolExp
+        - fieldName: email
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: firstName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: lastName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: lastUpdate
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: password
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: picture
+          booleanExpressionType: ByteaBoolExp
+        - fieldName: staffId
+          booleanExpressionType: Int4BoolExp
+        - fieldName: storeId
+          booleanExpressionType: Int2BoolExp
+        - fieldName: username
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: StaffBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: StaffAggExp
+  operand:
+    object:
+      aggregatedType: Staff
+      aggregatableFields:
+        - fieldName: active
+          aggregateExpression: BoolAggExp
+        - fieldName: addressId
+          aggregateExpression: Int2AggExp
+        - fieldName: email
+          aggregateExpression: VarcharAggExp
+        - fieldName: firstName
+          aggregateExpression: VarcharAggExp
+        - fieldName: lastName
+          aggregateExpression: VarcharAggExp
+        - fieldName: lastUpdate
+          aggregateExpression: TimestampAggExp
+        - fieldName: password
+          aggregateExpression: VarcharAggExp
+        - fieldName: picture
+          aggregateExpression: ByteaAggExp
+        - fieldName: staffId
+          aggregateExpression: Int4AggExp
+        - fieldName: storeId
+          aggregateExpression: Int2AggExp
+        - fieldName: username
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: StaffAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Staff
+  objectType: Staff
+  source:
+    dataConnectorName: my_pg
+    collection: staff
+  filterExpressionType: StaffBoolExp
+  aggregateExpression: StaffAggExp
+  orderableFields:
+    - fieldName: active
+      orderByDirections:
+        enableAll: true
+    - fieldName: addressId
+      orderByDirections:
+        enableAll: true
+    - fieldName: email
+      orderByDirections:
+        enableAll: true
+    - fieldName: firstName
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastName
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastUpdate
+      orderByDirections:
+        enableAll: true
+    - fieldName: password
+      orderByDirections:
+        enableAll: true
+    - fieldName: picture
+      orderByDirections:
+        enableAll: true
+    - fieldName: staffId
+      orderByDirections:
+        enableAll: true
+    - fieldName: storeId
+      orderByDirections:
+        enableAll: true
+    - fieldName: username
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: staff
+    selectUniques:
+      - queryRootField: staffByStaffId
+        uniqueIdentifier:
+          - staffId
+    orderByExpressionType: StaffOrderBy
+    filterInputTypeName: StaffFilterInput
+    aggregate:
+      queryRootField: staffAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Staff
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

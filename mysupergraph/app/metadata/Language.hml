@@ -1,0 +1,128 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Language
+  fields:
+    - name: languageId
+      type: Int4!
+    - name: lastUpdate
+      type: Timestamp!
+    - name: name
+      type: Bpchar!
+  graphql:
+    typeName: Language
+    inputTypeName: LanguageInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: language
+      fieldMapping:
+        languageId:
+          column:
+            name: language_id
+        lastUpdate:
+          column:
+            name: last_update
+        name:
+          column:
+            name: name
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Language
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - languageId
+          - lastUpdate
+          - name
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: LanguageBoolExp
+  operand:
+    object:
+      type: Language
+      comparableFields:
+        - fieldName: languageId
+          booleanExpressionType: Int4BoolExp
+        - fieldName: lastUpdate
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: name
+          booleanExpressionType: BpcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: LanguageBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: LanguageAggExp
+  operand:
+    object:
+      aggregatedType: Language
+      aggregatableFields:
+        - fieldName: languageId
+          aggregateExpression: Int4AggExp
+        - fieldName: lastUpdate
+          aggregateExpression: TimestampAggExp
+        - fieldName: name
+          aggregateExpression: BpcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: LanguageAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Language
+  objectType: Language
+  source:
+    dataConnectorName: my_pg
+    collection: language
+  filterExpressionType: LanguageBoolExp
+  aggregateExpression: LanguageAggExp
+  orderableFields:
+    - fieldName: languageId
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastUpdate
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: language
+    selectUniques:
+      - queryRootField: languageByLanguageId
+        uniqueIdentifier:
+          - languageId
+    orderByExpressionType: LanguageOrderBy
+    filterInputTypeName: LanguageFilterInput
+    aggregate:
+      queryRootField: languageAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Language
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

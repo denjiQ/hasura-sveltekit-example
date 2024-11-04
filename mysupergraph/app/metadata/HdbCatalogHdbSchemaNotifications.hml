@@ -1,0 +1,154 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: HdbCatalogHdbSchemaNotifications
+  fields:
+    - name: id
+      type: Int4!
+    - name: instanceId
+      type: Uuid!
+    - name: notification
+      type: Json!
+    - name: resourceVersion
+      type: Int4!
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: HdbCatalogHdbSchemaNotifications
+    inputTypeName: HdbCatalogHdbSchemaNotificationsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: hdb_catalog_hdb_schema_notifications
+      fieldMapping:
+        id:
+          column:
+            name: id
+        instanceId:
+          column:
+            name: instance_id
+        notification:
+          column:
+            name: notification
+        resourceVersion:
+          column:
+            name: resource_version
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: HdbCatalogHdbSchemaNotifications
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - instanceId
+          - notification
+          - resourceVersion
+          - updatedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: HdbCatalogHdbSchemaNotificationsBoolExp
+  operand:
+    object:
+      type: HdbCatalogHdbSchemaNotifications
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: Int4BoolExp
+        - fieldName: instanceId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: notification
+          booleanExpressionType: JsonBoolExp
+        - fieldName: resourceVersion
+          booleanExpressionType: Int4BoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: HdbCatalogHdbSchemaNotificationsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: HdbCatalogHdbSchemaNotificationsAggExp
+  operand:
+    object:
+      aggregatedType: HdbCatalogHdbSchemaNotifications
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: Int4AggExp
+        - fieldName: instanceId
+          aggregateExpression: UuidAggExp
+        - fieldName: notification
+          aggregateExpression: JsonAggExp
+        - fieldName: resourceVersion
+          aggregateExpression: Int4AggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: HdbCatalogHdbSchemaNotificationsAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: HdbCatalogHdbSchemaNotifications
+  objectType: HdbCatalogHdbSchemaNotifications
+  source:
+    dataConnectorName: my_pg
+    collection: hdb_catalog_hdb_schema_notifications
+  filterExpressionType: HdbCatalogHdbSchemaNotificationsBoolExp
+  aggregateExpression: HdbCatalogHdbSchemaNotificationsAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: instanceId
+      orderByDirections:
+        enableAll: true
+    - fieldName: notification
+      orderByDirections:
+        enableAll: true
+    - fieldName: resourceVersion
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: hdbCatalogHdbSchemaNotifications
+    selectUniques:
+      - queryRootField: hdbCatalogHdbSchemaNotificationsById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: HdbCatalogHdbSchemaNotificationsOrderBy
+    filterInputTypeName: HdbCatalogHdbSchemaNotificationsFilterInput
+    aggregate:
+      queryRootField: hdbCatalogHdbSchemaNotificationsAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: HdbCatalogHdbSchemaNotifications
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

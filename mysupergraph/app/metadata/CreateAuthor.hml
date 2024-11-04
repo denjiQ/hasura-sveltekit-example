@@ -1,0 +1,63 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: CreateAuthorResult
+  fields:
+    - name: id
+      type: Int32!
+    - name: name
+      type: String!
+  graphql:
+    typeName: CreateAuthorResult
+    inputTypeName: CreateAuthorResultInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_go
+      dataConnectorObjectType: CreateAuthorResult
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: CreateAuthorResult
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+
+---
+kind: Command
+version: v1
+definition:
+  name: CreateAuthor
+  outputType: CreateAuthorResult
+  arguments:
+    - name: name
+      type: String!
+  source:
+    dataConnectorName: my_go
+    dataConnectorCommand:
+      procedure: createAuthor
+  graphql:
+    rootFieldName: createAuthor
+    rootFieldKind: Mutation
+  description: "creates an author Procedure is an operation type of mutation, the
+    name of function will be `createAuthor`  Example:  curl
+    http://localhost:8080/mutation -H 'content-type: application/json' -d \\ '{
+    \"operations\": [ { \"type\": \"procedure\", \"name\": \"createAuthor\",
+    \"arguments\": { \"name\": \"John\" }, \"fields\": { \"type\": \"object\",
+    \"fields\": { \"id\": { \"type\": \"column\", \"column\": \"id\" },
+    \"name\": { \"type\": \"column\", \"column\": \"name\" } } } } ],
+    \"collection_relationships\": {} }'"
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: CreateAuthor
+  permissions:
+    - role: admin
+      allowExecution: true
+

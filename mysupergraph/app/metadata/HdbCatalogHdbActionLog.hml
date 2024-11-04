@@ -1,0 +1,219 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: HdbCatalogHdbActionLog
+  fields:
+    - name: actionName
+      type: Text
+    - name: createdAt
+      type: Timestamptz!
+    - name: errors
+      type: Jsonb
+    - name: id
+      type: Uuid!
+    - name: inputPayload
+      type: Jsonb!
+    - name: requestHeaders
+      type: Jsonb!
+    - name: responsePayload
+      type: Jsonb
+    - name: responseReceivedAt
+      type: Timestamptz
+    - name: sessionVariables
+      type: Jsonb!
+    - name: status
+      type: Text!
+  graphql:
+    typeName: HdbCatalogHdbActionLog
+    inputTypeName: HdbCatalogHdbActionLogInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: hdb_catalog_hdb_action_log
+      fieldMapping:
+        actionName:
+          column:
+            name: action_name
+        createdAt:
+          column:
+            name: created_at
+        errors:
+          column:
+            name: errors
+        id:
+          column:
+            name: id
+        inputPayload:
+          column:
+            name: input_payload
+        requestHeaders:
+          column:
+            name: request_headers
+        responsePayload:
+          column:
+            name: response_payload
+        responseReceivedAt:
+          column:
+            name: response_received_at
+        sessionVariables:
+          column:
+            name: session_variables
+        status:
+          column:
+            name: status
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: HdbCatalogHdbActionLog
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - actionName
+          - createdAt
+          - errors
+          - id
+          - inputPayload
+          - requestHeaders
+          - responsePayload
+          - responseReceivedAt
+          - sessionVariables
+          - status
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: HdbCatalogHdbActionLogBoolExp
+  operand:
+    object:
+      type: HdbCatalogHdbActionLog
+      comparableFields:
+        - fieldName: actionName
+          booleanExpressionType: TextBoolExp
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: errors
+          booleanExpressionType: JsonbBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: inputPayload
+          booleanExpressionType: JsonbBoolExp
+        - fieldName: requestHeaders
+          booleanExpressionType: JsonbBoolExp
+        - fieldName: responsePayload
+          booleanExpressionType: JsonbBoolExp
+        - fieldName: responseReceivedAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: sessionVariables
+          booleanExpressionType: JsonbBoolExp
+        - fieldName: status
+          booleanExpressionType: TextBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: HdbCatalogHdbActionLogBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: HdbCatalogHdbActionLogAggExp
+  operand:
+    object:
+      aggregatedType: HdbCatalogHdbActionLog
+      aggregatableFields:
+        - fieldName: actionName
+          aggregateExpression: TextAggExp
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: errors
+          aggregateExpression: JsonbAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: inputPayload
+          aggregateExpression: JsonbAggExp
+        - fieldName: requestHeaders
+          aggregateExpression: JsonbAggExp
+        - fieldName: responsePayload
+          aggregateExpression: JsonbAggExp
+        - fieldName: responseReceivedAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: sessionVariables
+          aggregateExpression: JsonbAggExp
+        - fieldName: status
+          aggregateExpression: TextAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: HdbCatalogHdbActionLogAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: HdbCatalogHdbActionLog
+  objectType: HdbCatalogHdbActionLog
+  source:
+    dataConnectorName: my_pg
+    collection: hdb_catalog_hdb_action_log
+  filterExpressionType: HdbCatalogHdbActionLogBoolExp
+  aggregateExpression: HdbCatalogHdbActionLogAggExp
+  orderableFields:
+    - fieldName: actionName
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: errors
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: inputPayload
+      orderByDirections:
+        enableAll: true
+    - fieldName: requestHeaders
+      orderByDirections:
+        enableAll: true
+    - fieldName: responsePayload
+      orderByDirections:
+        enableAll: true
+    - fieldName: responseReceivedAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: sessionVariables
+      orderByDirections:
+        enableAll: true
+    - fieldName: status
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: hdbCatalogHdbActionLog
+    selectUniques:
+      - queryRootField: hdbCatalogHdbActionLogById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: HdbCatalogHdbActionLogOrderBy
+    filterInputTypeName: HdbCatalogHdbActionLogFilterInput
+    aggregate:
+      queryRootField: hdbCatalogHdbActionLogAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: HdbCatalogHdbActionLog
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

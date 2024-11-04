@@ -1,0 +1,141 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Inventory
+  fields:
+    - name: filmId
+      type: Int2!
+    - name: inventoryId
+      type: Int4!
+    - name: lastUpdate
+      type: Timestamp!
+    - name: storeId
+      type: Int2!
+  graphql:
+    typeName: Inventory
+    inputTypeName: InventoryInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: inventory
+      fieldMapping:
+        filmId:
+          column:
+            name: film_id
+        inventoryId:
+          column:
+            name: inventory_id
+        lastUpdate:
+          column:
+            name: last_update
+        storeId:
+          column:
+            name: store_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Inventory
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - filmId
+          - inventoryId
+          - lastUpdate
+          - storeId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: InventoryBoolExp
+  operand:
+    object:
+      type: Inventory
+      comparableFields:
+        - fieldName: filmId
+          booleanExpressionType: Int2BoolExp
+        - fieldName: inventoryId
+          booleanExpressionType: Int4BoolExp
+        - fieldName: lastUpdate
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: storeId
+          booleanExpressionType: Int2BoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: InventoryBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: InventoryAggExp
+  operand:
+    object:
+      aggregatedType: Inventory
+      aggregatableFields:
+        - fieldName: filmId
+          aggregateExpression: Int2AggExp
+        - fieldName: inventoryId
+          aggregateExpression: Int4AggExp
+        - fieldName: lastUpdate
+          aggregateExpression: TimestampAggExp
+        - fieldName: storeId
+          aggregateExpression: Int2AggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: InventoryAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Inventory
+  objectType: Inventory
+  source:
+    dataConnectorName: my_pg
+    collection: inventory
+  filterExpressionType: InventoryBoolExp
+  aggregateExpression: InventoryAggExp
+  orderableFields:
+    - fieldName: filmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: inventoryId
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastUpdate
+      orderByDirections:
+        enableAll: true
+    - fieldName: storeId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: inventory
+    selectUniques:
+      - queryRootField: inventoryByInventoryId
+        uniqueIdentifier:
+          - inventoryId
+    orderByExpressionType: InventoryOrderBy
+    filterInputTypeName: InventoryFilterInput
+    aggregate:
+      queryRootField: inventoryAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Inventory
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

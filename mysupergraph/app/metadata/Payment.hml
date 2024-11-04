@@ -1,0 +1,167 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Payment
+  fields:
+    - name: amount
+      type: Numeric!
+    - name: customerId
+      type: Int2!
+    - name: paymentDate
+      type: Timestamp!
+    - name: paymentId
+      type: Int4!
+    - name: rentalId
+      type: Int4!
+    - name: staffId
+      type: Int2!
+  graphql:
+    typeName: Payment
+    inputTypeName: PaymentInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: payment
+      fieldMapping:
+        amount:
+          column:
+            name: amount
+        customerId:
+          column:
+            name: customer_id
+        paymentDate:
+          column:
+            name: payment_date
+        paymentId:
+          column:
+            name: payment_id
+        rentalId:
+          column:
+            name: rental_id
+        staffId:
+          column:
+            name: staff_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Payment
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - amount
+          - customerId
+          - paymentDate
+          - paymentId
+          - rentalId
+          - staffId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: PaymentBoolExp
+  operand:
+    object:
+      type: Payment
+      comparableFields:
+        - fieldName: amount
+          booleanExpressionType: NumericBoolExp
+        - fieldName: customerId
+          booleanExpressionType: Int2BoolExp
+        - fieldName: paymentDate
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: paymentId
+          booleanExpressionType: Int4BoolExp
+        - fieldName: rentalId
+          booleanExpressionType: Int4BoolExp
+        - fieldName: staffId
+          booleanExpressionType: Int2BoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: PaymentBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: PaymentAggExp
+  operand:
+    object:
+      aggregatedType: Payment
+      aggregatableFields:
+        - fieldName: amount
+          aggregateExpression: NumericAggExp
+        - fieldName: customerId
+          aggregateExpression: Int2AggExp
+        - fieldName: paymentDate
+          aggregateExpression: TimestampAggExp
+        - fieldName: paymentId
+          aggregateExpression: Int4AggExp
+        - fieldName: rentalId
+          aggregateExpression: Int4AggExp
+        - fieldName: staffId
+          aggregateExpression: Int2AggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: PaymentAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Payment
+  objectType: Payment
+  source:
+    dataConnectorName: my_pg
+    collection: payment
+  filterExpressionType: PaymentBoolExp
+  aggregateExpression: PaymentAggExp
+  orderableFields:
+    - fieldName: amount
+      orderByDirections:
+        enableAll: true
+    - fieldName: customerId
+      orderByDirections:
+        enableAll: true
+    - fieldName: paymentDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: paymentId
+      orderByDirections:
+        enableAll: true
+    - fieldName: rentalId
+      orderByDirections:
+        enableAll: true
+    - fieldName: staffId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: payment
+    selectUniques:
+      - queryRootField: paymentByPaymentId
+        uniqueIdentifier:
+          - paymentId
+    orderByExpressionType: PaymentOrderBy
+    filterInputTypeName: PaymentFilterInput
+    aggregate:
+      queryRootField: paymentAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Payment
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

@@ -1,0 +1,28 @@
+---
+kind: ScalarType
+version: v1
+definition:
+  name: Int32
+  graphql:
+    typeName: Int32
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: Int32BoolExp
+  operand:
+    scalar:
+      type: Int32
+      comparisonOperators: []
+      dataConnectorOperatorMapping:
+        - dataConnectorName: my_go
+          dataConnectorScalarType: Int32
+          operatorMapping: {}
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: Int32BoolExp
+

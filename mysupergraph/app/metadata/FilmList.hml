@@ -1,0 +1,165 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: FilmList
+  fields:
+    - name: actors
+      type: Text
+    - name: category
+      type: Varchar
+    - name: description
+      type: Text
+    - name: fid
+      type: Int4
+    - name: length
+      type: Int2
+    - name: price
+      type: Numeric
+    - name: rating
+      type: MpaaRating
+    - name: title
+      type: Varchar
+  graphql:
+    typeName: FilmList
+    inputTypeName: FilmListInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: film_list
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: FilmList
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - actors
+          - category
+          - description
+          - fid
+          - length
+          - price
+          - rating
+          - title
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: FilmListBoolExp
+  operand:
+    object:
+      type: FilmList
+      comparableFields:
+        - fieldName: actors
+          booleanExpressionType: TextBoolExp
+        - fieldName: category
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: description
+          booleanExpressionType: TextBoolExp
+        - fieldName: fid
+          booleanExpressionType: Int4BoolExp
+        - fieldName: length
+          booleanExpressionType: Int2BoolExp
+        - fieldName: price
+          booleanExpressionType: NumericBoolExp
+        - fieldName: rating
+          booleanExpressionType: MpaaRatingBoolExp
+        - fieldName: title
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: FilmListBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: FilmListAggExp
+  operand:
+    object:
+      aggregatedType: FilmList
+      aggregatableFields:
+        - fieldName: actors
+          aggregateExpression: TextAggExp
+        - fieldName: category
+          aggregateExpression: VarcharAggExp
+        - fieldName: description
+          aggregateExpression: TextAggExp
+        - fieldName: fid
+          aggregateExpression: Int4AggExp
+        - fieldName: length
+          aggregateExpression: Int2AggExp
+        - fieldName: price
+          aggregateExpression: NumericAggExp
+        - fieldName: rating
+          aggregateExpression: MpaaRatingAggExp
+        - fieldName: title
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: FilmListAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: FilmList
+  objectType: FilmList
+  source:
+    dataConnectorName: my_pg
+    collection: film_list
+  filterExpressionType: FilmListBoolExp
+  aggregateExpression: FilmListAggExp
+  orderableFields:
+    - fieldName: actors
+      orderByDirections:
+        enableAll: true
+    - fieldName: category
+      orderByDirections:
+        enableAll: true
+    - fieldName: description
+      orderByDirections:
+        enableAll: true
+    - fieldName: fid
+      orderByDirections:
+        enableAll: true
+    - fieldName: length
+      orderByDirections:
+        enableAll: true
+    - fieldName: price
+      orderByDirections:
+        enableAll: true
+    - fieldName: rating
+      orderByDirections:
+        enableAll: true
+    - fieldName: title
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: filmList
+    selectUniques: []
+    orderByExpressionType: FilmListOrderBy
+    filterInputTypeName: FilmListFilterInput
+    aggregate:
+      queryRootField: filmListAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: FilmList
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

@@ -1,0 +1,219 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Customer
+  fields:
+    - name: active
+      type: Int4
+    - name: activebool
+      type: Bool!
+    - name: addressId
+      type: Int2!
+    - name: createDate
+      type: Date!
+    - name: customerId
+      type: Int4!
+    - name: email
+      type: Varchar
+    - name: firstName
+      type: Varchar!
+    - name: lastName
+      type: Varchar!
+    - name: lastUpdate
+      type: Timestamp
+    - name: storeId
+      type: Int2!
+  graphql:
+    typeName: Customer
+    inputTypeName: CustomerInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: customer
+      fieldMapping:
+        active:
+          column:
+            name: active
+        activebool:
+          column:
+            name: activebool
+        addressId:
+          column:
+            name: address_id
+        createDate:
+          column:
+            name: create_date
+        customerId:
+          column:
+            name: customer_id
+        email:
+          column:
+            name: email
+        firstName:
+          column:
+            name: first_name
+        lastName:
+          column:
+            name: last_name
+        lastUpdate:
+          column:
+            name: last_update
+        storeId:
+          column:
+            name: store_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Customer
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - active
+          - activebool
+          - addressId
+          - createDate
+          - customerId
+          - email
+          - firstName
+          - lastName
+          - lastUpdate
+          - storeId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: CustomerBoolExp
+  operand:
+    object:
+      type: Customer
+      comparableFields:
+        - fieldName: active
+          booleanExpressionType: Int4BoolExp
+        - fieldName: activebool
+          booleanExpressionType: BoolBoolExp
+        - fieldName: addressId
+          booleanExpressionType: Int2BoolExp
+        - fieldName: createDate
+          booleanExpressionType: DateBoolExp
+        - fieldName: customerId
+          booleanExpressionType: Int4BoolExp
+        - fieldName: email
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: firstName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: lastName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: lastUpdate
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: storeId
+          booleanExpressionType: Int2BoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: CustomerBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: CustomerAggExp
+  operand:
+    object:
+      aggregatedType: Customer
+      aggregatableFields:
+        - fieldName: active
+          aggregateExpression: Int4AggExp
+        - fieldName: activebool
+          aggregateExpression: BoolAggExp
+        - fieldName: addressId
+          aggregateExpression: Int2AggExp
+        - fieldName: createDate
+          aggregateExpression: DateAggExp
+        - fieldName: customerId
+          aggregateExpression: Int4AggExp
+        - fieldName: email
+          aggregateExpression: VarcharAggExp
+        - fieldName: firstName
+          aggregateExpression: VarcharAggExp
+        - fieldName: lastName
+          aggregateExpression: VarcharAggExp
+        - fieldName: lastUpdate
+          aggregateExpression: TimestampAggExp
+        - fieldName: storeId
+          aggregateExpression: Int2AggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: CustomerAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Customer
+  objectType: Customer
+  source:
+    dataConnectorName: my_pg
+    collection: customer
+  filterExpressionType: CustomerBoolExp
+  aggregateExpression: CustomerAggExp
+  orderableFields:
+    - fieldName: active
+      orderByDirections:
+        enableAll: true
+    - fieldName: activebool
+      orderByDirections:
+        enableAll: true
+    - fieldName: addressId
+      orderByDirections:
+        enableAll: true
+    - fieldName: createDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: customerId
+      orderByDirections:
+        enableAll: true
+    - fieldName: email
+      orderByDirections:
+        enableAll: true
+    - fieldName: firstName
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastName
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastUpdate
+      orderByDirections:
+        enableAll: true
+    - fieldName: storeId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: customer
+    selectUniques:
+      - queryRootField: customerByCustomerId
+        uniqueIdentifier:
+          - customerId
+    orderByExpressionType: CustomerOrderBy
+    filterInputTypeName: CustomerFilterInput
+    aggregate:
+      queryRootField: customerAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Customer
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

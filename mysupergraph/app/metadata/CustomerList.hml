@@ -1,0 +1,203 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: CustomerList
+  fields:
+    - name: address
+      type: Varchar
+    - name: city
+      type: Varchar
+    - name: country
+      type: Varchar
+    - name: id
+      type: Int4
+    - name: name
+      type: Text
+    - name: notes
+      type: Text
+    - name: phone
+      type: Varchar
+    - name: sid
+      type: Int2
+    - name: zipCode
+      type: Varchar
+  graphql:
+    typeName: CustomerList
+    inputTypeName: CustomerListInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: customer_list
+      fieldMapping:
+        address:
+          column:
+            name: address
+        city:
+          column:
+            name: city
+        country:
+          column:
+            name: country
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        notes:
+          column:
+            name: notes
+        phone:
+          column:
+            name: phone
+        sid:
+          column:
+            name: sid
+        zipCode:
+          column:
+            name: zip code
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: CustomerList
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - address
+          - city
+          - country
+          - id
+          - name
+          - notes
+          - phone
+          - sid
+          - zipCode
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: CustomerListBoolExp
+  operand:
+    object:
+      type: CustomerList
+      comparableFields:
+        - fieldName: address
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: city
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: country
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: Int4BoolExp
+        - fieldName: name
+          booleanExpressionType: TextBoolExp
+        - fieldName: notes
+          booleanExpressionType: TextBoolExp
+        - fieldName: phone
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: sid
+          booleanExpressionType: Int2BoolExp
+        - fieldName: zipCode
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: CustomerListBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: CustomerListAggExp
+  operand:
+    object:
+      aggregatedType: CustomerList
+      aggregatableFields:
+        - fieldName: address
+          aggregateExpression: VarcharAggExp
+        - fieldName: city
+          aggregateExpression: VarcharAggExp
+        - fieldName: country
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: Int4AggExp
+        - fieldName: name
+          aggregateExpression: TextAggExp
+        - fieldName: notes
+          aggregateExpression: TextAggExp
+        - fieldName: phone
+          aggregateExpression: VarcharAggExp
+        - fieldName: sid
+          aggregateExpression: Int2AggExp
+        - fieldName: zipCode
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: CustomerListAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: CustomerList
+  objectType: CustomerList
+  source:
+    dataConnectorName: my_pg
+    collection: customer_list
+  filterExpressionType: CustomerListBoolExp
+  aggregateExpression: CustomerListAggExp
+  orderableFields:
+    - fieldName: address
+      orderByDirections:
+        enableAll: true
+    - fieldName: city
+      orderByDirections:
+        enableAll: true
+    - fieldName: country
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: notes
+      orderByDirections:
+        enableAll: true
+    - fieldName: phone
+      orderByDirections:
+        enableAll: true
+    - fieldName: sid
+      orderByDirections:
+        enableAll: true
+    - fieldName: zipCode
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: customerList
+    selectUniques: []
+    orderByExpressionType: CustomerListOrderBy
+    filterInputTypeName: CustomerListFilterInput
+    aggregate:
+      queryRootField: customerListAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: CustomerList
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

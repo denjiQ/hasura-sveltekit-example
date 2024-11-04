@@ -1,0 +1,167 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: HdbCatalogHdbScheduledEventInvocationLogs
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: eventId
+      type: Text
+    - name: id
+      type: Text!
+    - name: request
+      type: Json
+    - name: response
+      type: Json
+    - name: status
+      type: Int4
+  graphql:
+    typeName: HdbCatalogHdbScheduledEventInvocationLogs
+    inputTypeName: HdbCatalogHdbScheduledEventInvocationLogsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: hdb_catalog_hdb_scheduled_event_invocation_logs
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        eventId:
+          column:
+            name: event_id
+        id:
+          column:
+            name: id
+        request:
+          column:
+            name: request
+        response:
+          column:
+            name: response
+        status:
+          column:
+            name: status
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: HdbCatalogHdbScheduledEventInvocationLogs
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - eventId
+          - id
+          - request
+          - response
+          - status
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: HdbCatalogHdbScheduledEventInvocationLogsBoolExp
+  operand:
+    object:
+      type: HdbCatalogHdbScheduledEventInvocationLogs
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: eventId
+          booleanExpressionType: TextBoolExp
+        - fieldName: id
+          booleanExpressionType: TextBoolExp
+        - fieldName: request
+          booleanExpressionType: JsonBoolExp
+        - fieldName: response
+          booleanExpressionType: JsonBoolExp
+        - fieldName: status
+          booleanExpressionType: Int4BoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: HdbCatalogHdbScheduledEventInvocationLogsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: HdbCatalogHdbScheduledEventInvocationLogsAggExp
+  operand:
+    object:
+      aggregatedType: HdbCatalogHdbScheduledEventInvocationLogs
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: eventId
+          aggregateExpression: TextAggExp
+        - fieldName: id
+          aggregateExpression: TextAggExp
+        - fieldName: request
+          aggregateExpression: JsonAggExp
+        - fieldName: response
+          aggregateExpression: JsonAggExp
+        - fieldName: status
+          aggregateExpression: Int4AggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: HdbCatalogHdbScheduledEventInvocationLogsAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: HdbCatalogHdbScheduledEventInvocationLogs
+  objectType: HdbCatalogHdbScheduledEventInvocationLogs
+  source:
+    dataConnectorName: my_pg
+    collection: hdb_catalog_hdb_scheduled_event_invocation_logs
+  filterExpressionType: HdbCatalogHdbScheduledEventInvocationLogsBoolExp
+  aggregateExpression: HdbCatalogHdbScheduledEventInvocationLogsAggExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: eventId
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: request
+      orderByDirections:
+        enableAll: true
+    - fieldName: response
+      orderByDirections:
+        enableAll: true
+    - fieldName: status
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: hdbCatalogHdbScheduledEventInvocationLogs
+    selectUniques:
+      - queryRootField: hdbCatalogHdbScheduledEventInvocationLogsById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: HdbCatalogHdbScheduledEventInvocationLogsOrderBy
+    filterInputTypeName: HdbCatalogHdbScheduledEventInvocationLogsFilterInput
+    aggregate:
+      queryRootField: hdbCatalogHdbScheduledEventInvocationLogsAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: HdbCatalogHdbScheduledEventInvocationLogs
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

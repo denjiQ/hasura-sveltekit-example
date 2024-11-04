@@ -1,0 +1,180 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: HdbCatalogHdbVersion
+  fields:
+    - name: cliState
+      type: Jsonb!
+    - name: consoleState
+      type: Jsonb!
+    - name: eeClientId
+      type: Text
+    - name: eeClientSecret
+      type: Text
+    - name: hasuraUuid
+      type: Uuid!
+    - name: upgradedOn
+      type: Timestamptz!
+    - name: version
+      type: Text!
+  graphql:
+    typeName: HdbCatalogHdbVersion
+    inputTypeName: HdbCatalogHdbVersionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_pg
+      dataConnectorObjectType: hdb_catalog_hdb_version
+      fieldMapping:
+        cliState:
+          column:
+            name: cli_state
+        consoleState:
+          column:
+            name: console_state
+        eeClientId:
+          column:
+            name: ee_client_id
+        eeClientSecret:
+          column:
+            name: ee_client_secret
+        hasuraUuid:
+          column:
+            name: hasura_uuid
+        upgradedOn:
+          column:
+            name: upgraded_on
+        version:
+          column:
+            name: version
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: HdbCatalogHdbVersion
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - cliState
+          - consoleState
+          - eeClientId
+          - eeClientSecret
+          - hasuraUuid
+          - upgradedOn
+          - version
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: HdbCatalogHdbVersionBoolExp
+  operand:
+    object:
+      type: HdbCatalogHdbVersion
+      comparableFields:
+        - fieldName: cliState
+          booleanExpressionType: JsonbBoolExp
+        - fieldName: consoleState
+          booleanExpressionType: JsonbBoolExp
+        - fieldName: eeClientId
+          booleanExpressionType: TextBoolExp
+        - fieldName: eeClientSecret
+          booleanExpressionType: TextBoolExp
+        - fieldName: hasuraUuid
+          booleanExpressionType: UuidBoolExp
+        - fieldName: upgradedOn
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: version
+          booleanExpressionType: TextBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: HdbCatalogHdbVersionBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: HdbCatalogHdbVersionAggExp
+  operand:
+    object:
+      aggregatedType: HdbCatalogHdbVersion
+      aggregatableFields:
+        - fieldName: cliState
+          aggregateExpression: JsonbAggExp
+        - fieldName: consoleState
+          aggregateExpression: JsonbAggExp
+        - fieldName: eeClientId
+          aggregateExpression: TextAggExp
+        - fieldName: eeClientSecret
+          aggregateExpression: TextAggExp
+        - fieldName: hasuraUuid
+          aggregateExpression: UuidAggExp
+        - fieldName: upgradedOn
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: version
+          aggregateExpression: TextAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: HdbCatalogHdbVersionAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: HdbCatalogHdbVersion
+  objectType: HdbCatalogHdbVersion
+  source:
+    dataConnectorName: my_pg
+    collection: hdb_catalog_hdb_version
+  filterExpressionType: HdbCatalogHdbVersionBoolExp
+  aggregateExpression: HdbCatalogHdbVersionAggExp
+  orderableFields:
+    - fieldName: cliState
+      orderByDirections:
+        enableAll: true
+    - fieldName: consoleState
+      orderByDirections:
+        enableAll: true
+    - fieldName: eeClientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: eeClientSecret
+      orderByDirections:
+        enableAll: true
+    - fieldName: hasuraUuid
+      orderByDirections:
+        enableAll: true
+    - fieldName: upgradedOn
+      orderByDirections:
+        enableAll: true
+    - fieldName: version
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: hdbCatalogHdbVersion
+    selectUniques:
+      - queryRootField: hdbCatalogHdbVersionByHasuraUuid
+        uniqueIdentifier:
+          - hasuraUuid
+    orderByExpressionType: HdbCatalogHdbVersionOrderBy
+    filterInputTypeName: HdbCatalogHdbVersionFilterInput
+    aggregate:
+      queryRootField: hdbCatalogHdbVersionAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: HdbCatalogHdbVersion
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
