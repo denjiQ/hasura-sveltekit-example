@@ -24,6 +24,7 @@ http://localhost:5173
 - https://note.com/dinii/n/n9be778bd7da3#8wybV
   - App Syncはいちいちスキーマ定義してmapping templateを書く
 - Action: バリデーションなどDBに行く前の処理を実行できる
+  - ただ記述が若干面倒。input validationの方が楽に記述できる
 - Event: データ変更後の処理
 - 単純なCRUDしかしない管理画面などの用途には良さそう
 
@@ -40,3 +41,12 @@ http://localhost:5173
     - https://svelte.dev/docs/kit/load
 - $typeをimportしたりする魔法っぽいstatementは気に入らない人は気に入らないかも
 
+## Hasura DDN
+
+- Hasura v3
+- 複数のデータソースをsubgraphとしてより体系的にまとめやすくなった
+  - が、具体的な利点はよくわからない
+- Hasura v2ではクエリ生成はコアのGraphqlエンジンがやっていたが、v3ではデータコネクターを自作できるので、より柔軟になった
+  - データソースへのコネクターを開発者に作ってもらおうというスタンスな感じ
+- v2に比べるとinput validationがなかったり、機能的に足りないところがある
+  - でもそれも作ってねって感じなのか？

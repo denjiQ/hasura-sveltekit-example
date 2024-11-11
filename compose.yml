@@ -6,7 +6,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - '5432:5432'
+      - '5532:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./tmp:/tmp
@@ -17,6 +17,7 @@ services:
       - postgres
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+      HASURA_GRAPHQL_DATABASE_URL2: postgres://superuser:superuser@localhost:5432/immedio
       HASURA_GRAPHQL_ENABLE_CONSOLE: true # コンソールを有効にする
       HASURA_GRAPHQL_DEV_MODE: true # 開発モード
     ports:

@@ -4,6 +4,7 @@ definition:
   current: default
   contexts:
     default:
+      project: bold-alpaca-9777
       supergraph: ../supergraph.yaml
       subgraph: ../app/subgraph.yaml
       localEnvFile: ../.env
